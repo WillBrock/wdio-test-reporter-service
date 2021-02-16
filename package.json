@@ -1,0 +1,33 @@
+{
+  "name": "wdio-test-reporter-service",
+  "version": "0.0.1",
+  "description": "WebdriverIO server to send reporter data to testreporter.io",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WillBrock/wdio-test-reporter-service.git"
+  },
+  "keywords": [
+    "WebdriverIO",
+    "tests",
+    "test",
+    "e2e",
+    "wdio",
+    "testing",
+    "reporter",
+    "service"
+  ],
+  "author": "Will Brock",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WillBrock/wdio-test-reporter-service/issues"
+  },
+  "homepage": "https://github.com/WillBrock/wdio-test-reporter-service#readme",
+  "dependencies": {
+    "btoa": "^1.2.1",
+    "node-fetch": "^2.6.1"
+  }
+}
