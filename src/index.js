@@ -1,4 +1,4 @@
-const fs    = require(`fs`);
+const fs    = require(`fs-extra`);
 const path  = require(`path`);
 const fetch = require(`node-fetch`);
 const btoa  = require(`btoa`);
@@ -25,13 +25,19 @@ class TestReporterLauncher {
 	}
 
 	onPrepare() {
+		fs.emptyDirSync(this.options.reporterOutputDir);
+
 		this.start = new Date();
 	}
 
-	onComplete(exit_code, config) {
+	async onComplete(exit_code, config) {
 		const data = this.buildData(config);
-		fs.writeFileSync(`/home/will/dev/wdio-project/foobar.txt`, JSON.stringify(data, null, `\t`))
-		// this.post(data);
+
+		try {
+			await this.post(data);
+		}
+		catch(e) {
+		}
 	}
 
 	buildData(config) {
@@ -45,8 +51,8 @@ class TestReporterLauncher {
 			run_date   : this.start.toISOString(),
 			duration   : new Date().getTime() - this.start.getTime(),
 			version    : process.env.CODE_VERSION || this.options.codeVersion,
-			suites_ran : config.suites ? Object.keys(config.suites).join(`, `) : ``,
-			passed     : 0,
+			suites_ran : config.suite ? config.suite.join(`, `) : ``,
+			passed     : 1,
 			failed     : 0,
 			suites     : [],
 		};
@@ -63,9 +69,8 @@ class TestReporterLauncher {
 
 			const suite_data = {
 				title        : content.title,
-				spec_id      : content.spec_id,
+				spec_file    : content.spec_file,
 				capabilities : content.capabilities,
-				start        : content.start,
 				duration     : content.duration,
 				retries      : content.retries,
 				passed       : content.passed,
@@ -78,7 +83,6 @@ class TestReporterLauncher {
 			for(const test of content.tests) {
 				const test_data = {
 					title    : test.title,
-					start    : test.start,
 					duration : test.duration,
 					passed   : test.passed,
 					retries  : test.retries,
@@ -90,6 +94,11 @@ class TestReporterLauncher {
 				suite_data.tests.push(test_data);
 			}
 
+			if(content.failed) {
+				data.failed = 1;
+				data.passed = 0;
+			}
+
 			data.suites.push(suite_data);
 		}
 
@@ -97,8 +106,10 @@ class TestReporterLauncher {
 	}
 
 	post(data) {
-		fetch(this.getApiRoute(), {
-			method  : `post`,
+		fs.writeFileSync(`/home/will/dev/wdio-project/billy.txt`, `${this.options.apiURL} -- ${this.getApiRoute()} -- ${this.getAuthToken()}`)
+
+		return fetch(this.getApiRoute(), {
+			method  : `POST`,
 			headers : {
 				'Content-Type'  : `application/json`,
 				'Authorization' : `Basic ${this.getAuthToken()}`,
@@ -111,7 +122,7 @@ class TestReporterLauncher {
 		return [
 			this.options.apiURL,
 			`/runs`,
-		].join();
+		].join(``);
 	}
 
 	getAuthToken() {
