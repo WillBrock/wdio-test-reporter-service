@@ -106,8 +106,6 @@ class TestReporterLauncher {
 	}
 
 	post(data) {
-		fs.writeFileSync(`/home/will/dev/wdio-project/billy.txt`, `${this.options.apiURL} -- ${this.getApiRoute()} -- ${this.getAuthToken()}`)
-
 		return fetch(this.getApiRoute(), {
 			method  : `POST`,
 			headers : {
