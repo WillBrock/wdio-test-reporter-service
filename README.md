@@ -11,8 +11,8 @@
 		reporterOutputDir : `./reports`,
 		apiURL            : `https://api.testreporter.io/1.0`,
 		username          : `jenkins@foobar.com`,
-		api_token         : ``,
+		api_token         : `12345`,
 		project_id        : 283, // Only needed if using more than one project
-		codeVersion       : `10.0.1`,
+		codeVersion       : `10.0.1`, // code version can also be set here
 	}]],
 ```
