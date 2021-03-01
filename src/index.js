@@ -1,7 +1,8 @@
-const fs    = require(`fs-extra`);
-const path  = require(`path`);
-const fetch = require(`node-fetch`);
-const btoa  = require(`btoa`);
+const fs      = require(`fs-extra`);
+const path    = require(`path`);
+const fetch   = require(`node-fetch`);
+const btoa    = require(`btoa`);
+const api_url = `https://api.testreporter.io`;
 
 class TestReporterLauncher {
 	constructor(options) {
@@ -9,10 +10,6 @@ class TestReporterLauncher {
 
 		if(!this.options.reporterOutputDir) {
 			throw new Error(`No reporterOutputDir specified`)
-		}
-
-		if(!this.options.apiURL) {
-			throw new Error(`No apiURL specified`)
 		}
 
 		if(!this.options.username) {
@@ -118,7 +115,7 @@ class TestReporterLauncher {
 
 	getApiRoute() {
 		return [
-			this.options.apiURL,
+			api_url,
 			`/runs`,
 		].join(``);
 	}
