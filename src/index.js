@@ -34,6 +34,7 @@ class TestReporterLauncher {
 			await this.post(data);
 		}
 		catch(e) {
+			fs.writeFileSync(`${this.options.reporterOutputDir}/post-error.txt`, e.message, { encoding : `utf-8` });
 		}
 	}
 
