@@ -16,10 +16,10 @@ Environment variables can be set when running tests that the server will use to 
 
 ```
 	services: [['test-reporter', {
-		reporter_output_dir : `./reports`, // This must match the outputDir from the wdio-test-reporter
-		username            : `jenkins@foobar.com`,
-		api_token           : `12345`, // Found in the console.testreporter.io site
-		project_id          : 283, // Only needed if using more than one project
-		code_version        : `10.0.1`, // code version can also be set here
+		reporterOutputDir : `./reports`, // This must match the outputDir from the wdio-test-reporter
+		username          : `jenkins@foobar.com`,
+		apiPoken          : `12345`, // Found in the console.testreporter.io site
+		project_id        : 283, // Only needed if using more than one project
+		codeVersion       : `10.0.1`, // code version can also be set here
 	}]],
 ```

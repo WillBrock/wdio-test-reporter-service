@@ -8,7 +8,7 @@ class TestReporterLauncher {
 	constructor(options) {
 		this.options = options;
 
-		if(!this.options.reporter_output_dir) {
+		if(!this.options.reporterOutputDir) {
 			throw new Error(`No reporterOutputDir specified`)
 		}
 
@@ -16,8 +16,8 @@ class TestReporterLauncher {
 			throw new Error(`No username specified`)
 		}
 
-		if(!this.options.api_token) {
-			throw new Error(`No api_token specified`)
+		if(!this.options.apiToken) {
+			throw new Error(`No apiToken specified`)
 		}
 	}
 
@@ -48,7 +48,7 @@ class TestReporterLauncher {
 			title      : process.env.RUN_TITLE || this.start,
 			run_date   : this.start.toISOString(),
 			duration   : new Date().getTime() - this.start.getTime(),
-			version    : process.env.CODE_VERSION || this.options.code_version,
+			version    : process.env.CODE_VERSION || this.options.codeVersion,
 			suites_ran : config.suite ? config.suite.join(`, `) : ``,
 			passed     : 1,
 			failed     : 0,
@@ -128,7 +128,7 @@ class TestReporterLauncher {
 	getAuthToken() {
 		return btoa([
 			this.options.username,
-			this.options.api_token,
+			this.options.apiToken,
 		].join(`:`));
 	}
 }
