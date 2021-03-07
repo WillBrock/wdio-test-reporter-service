@@ -61,9 +61,13 @@ class TestReporterLauncher {
 			}
 
 			const filepath = `${directory}/${file}`;
-
 			const tmp      = fs.readFileSync(filepath, { encoding : `utf8` });
-			const content  = JSON.parse(tmp);
+
+			if(!tmp) {
+				continue;
+			}
+
+			const content = JSON.parse(tmp);
 
 			const suite_data = {
 				title        : content.title,
