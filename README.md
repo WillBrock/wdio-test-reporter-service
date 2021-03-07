@@ -19,7 +19,7 @@ Environment variables can be set when running tests that the server will use to 
 		reporterOutputDir : `./reports`, // This must match the outputDir from the wdio-test-reporter
 		username          : `jenkins@foobar.com`,
 		apiPoken          : `12345`, // Found in the console.testreporter.io site
-		project_id        : 283, // Only needed if using more than one project
+		projectId         : 283, // Only needed if using more than one project
 		codeVersion       : `10.0.1`, // code version can also be set here
 	}]],
 ```

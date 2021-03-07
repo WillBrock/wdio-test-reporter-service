@@ -39,11 +39,13 @@ class TestReporterLauncher {
 	}
 
 	buildData(config) {
-		const directory = path.resolve(this.options.reporterOutputDir);
-		const files     = fs.readdirSync(directory);
+		const directory  = path.resolve(this.options.reporterOutputDir);
+		const files      = fs.readdirSync(directory);
+		const suite_data = {};
+		const all_errors = {};
 
 		const data = {
-			project_id : this.options.project_id,
+			project_id : this.options.projectId,
 			uuid       : process.env.RUN_UUID,
 			title      : process.env.RUN_TITLE || this.start,
 			run_date   : this.start.toISOString(),
@@ -67,9 +69,10 @@ class TestReporterLauncher {
 				continue;
 			}
 
-			const content = JSON.parse(tmp);
+			const content   = JSON.parse(tmp);
+			const suite_key = btoa(`${content.spec_file}:${content.capabilities}:${content.title}`);
 
-			const suite_data = {
+			suite_data[suite_key] = {
 				title        : content.title,
 				spec_file    : content.spec_file,
 				capabilities : content.capabilities,
@@ -78,11 +81,19 @@ class TestReporterLauncher {
 				passed       : content.passed,
 				failed       : content.failed,
 				skipped      : content.skipped,
+				tests        : [],
 			};
 
-			suite_data.tests = [];
-
 			for(const test of content.tests) {
+				const test_key = btoa(`${content.spec_file}:${content.capabilities}:${content.title}:${test.title}`);
+
+				if(!all_errors[test_key]) {
+					all_errors[test_key] = [];
+				}
+
+				// This will make sure we have stored errors from the same test if it has retried
+				all_errors[test_key] = [...all_errors[test_key], ...test.errors];
+
 				const test_data = {
 					title    : test.title,
 					duration : test.duration,
@@ -90,19 +101,19 @@ class TestReporterLauncher {
 					retries  : test.retries,
 					failed   : test.failed,
 					skipped  : test.skipped,
-					errors   : test.errors,
+					errors   : all_errors[test_key],
 				};
 
-				suite_data.tests.push(test_data);
+				suite_data[suite_key].tests.push(test_data);
 			}
 
 			if(content.failed) {
 				data.failed = 1;
 				data.passed = 0;
 			}
-
-			data.suites.push(suite_data);
 		}
+
+		data.suites = Object.values(suite_data);
 
 		return data;
 	}
