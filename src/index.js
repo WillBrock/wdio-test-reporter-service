@@ -8,7 +8,7 @@ class TestReporterLauncher {
 	constructor(options) {
 		this.options = options;
 
-		if(!this.options.reporterOutputDir) {
+		if(!this.options.reporter_output_dir) {
 			throw new Error(`No reporterOutputDir specified`)
 		}
 
@@ -48,7 +48,7 @@ class TestReporterLauncher {
 			title      : process.env.RUN_TITLE || this.start,
 			run_date   : this.start.toISOString(),
 			duration   : new Date().getTime() - this.start.getTime(),
-			version    : process.env.CODE_VERSION || this.options.codeVersion,
+			version    : process.env.CODE_VERSION || this.options.code_version,
 			suites_ran : config.suite ? config.suite.join(`, `) : ``,
 			passed     : 1,
 			failed     : 0,
