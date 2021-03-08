@@ -106,14 +106,21 @@ class TestReporterLauncher {
 
 				suite_data[suite_key].tests.push(test_data);
 			}
-
-			if(content.failed) {
-				data.failed = 1;
-				data.passed = 0;
-			}
 		}
 
-		data.suites = Object.values(suite_data);
+		const suites = Object.values(suite_data);
+		for(const suite of suites) {
+			if(!suite.failed) {
+				continue;
+			}
+
+			data.failed = 1;
+			data.passed = 0;
+
+			break;
+		}
+
+		data.suites = suites;
 
 		return data;
 	}
