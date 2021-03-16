@@ -43,6 +43,7 @@ class TestReporterLauncher {
 		const files      = fs.readdirSync(directory);
 		const suite_data = {};
 		const all_errors = {};
+		const all_hooks  = {};
 
 		const data = {
 			project_id : this.options.projectId,
@@ -77,7 +78,7 @@ class TestReporterLauncher {
 				spec_file    : content.spec_file,
 				capabilities : content.capabilities,
 				duration     : content.duration,
-				retries      : content.retries,
+				retries      : content.retries || 0,
 				passed       : content.passed,
 				failed       : content.failed,
 				skipped      : content.skipped,
@@ -85,6 +86,7 @@ class TestReporterLauncher {
 			};
 
 			for(const test of content.tests) {
+				const hook     = test.type === `hook`;
 				const test_key = btoa(`${content.spec_file}:${content.capabilities}:${content.title}:${test.title}`);
 
 				if(!all_errors[test_key]) {
@@ -105,6 +107,18 @@ class TestReporterLauncher {
 				};
 
 				suite_data[suite_key].tests.push(test_data);
+
+				if(hook && !all_hooks[suite_key]) {
+					all_hooks[suite_key] = [];
+				}
+
+				if(hook) {
+					all_hooks[suite_key].push(test_data)
+				}
+			}
+
+			if(all_hooks[suite_key]) {
+				suite_data[suite_key].tests = [...suite_data[suite_key].tests, ...all_hooks[suite_key]];
 			}
 		}
 
