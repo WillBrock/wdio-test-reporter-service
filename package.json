@@ -28,7 +28,7 @@
   "homepage": "https://github.com/WillBrock/wdio-test-reporter-service#readme",
   "dependencies": {
     "btoa": "^1.2.1",
-    "fs-extra": "^9.1.0",
+    "fs-extra": "^10.0.0",
     "node-fetch": "^2.6.1"
   }
 }
