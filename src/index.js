@@ -1,7 +1,6 @@
-import fs    from 'fs-extra';
-import path  from 'path';
-import fetch from 'node-fetch';
-import btoa  from 'btoa';
+import fs   from 'fs-extra';
+import path from 'path';
+import btoa from 'btoa';
 import { SevereServiceError } from 'webdriverio';
 
 const api_url = `https://api.testreporter.io`;
