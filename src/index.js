@@ -2,7 +2,7 @@ const fs      = require(`fs-extra`);
 const path    = require(`path`);
 const fetch   = require(`node-fetch`);
 const btoa    = require(`btoa`);
-const api_url = `https://api.testreporter.io`;
+const api_url = `https://api.e2ereporter.com`;
 
 class TestReporterLauncher {
 	constructor(options) {
