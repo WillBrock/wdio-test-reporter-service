@@ -3,7 +3,7 @@ import path from 'path';
 import btoa from 'btoa';
 import { SevereServiceError } from 'webdriverio';
 
-const api_url = `https://api.testreporter.io`;
+const api_url = `https://api.e2ereporter.com`;
 
 class TestReporterLauncher {
 	constructor(options) {
