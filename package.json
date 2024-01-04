@@ -2,6 +2,7 @@
   "name": "wdio-test-reporter-service",
   "version": "8.0.0",
   "description": "WebdriverIO server to send reporter data to testreporter.io",
+  "type": "module",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\""
