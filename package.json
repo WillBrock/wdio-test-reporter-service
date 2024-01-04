@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/index.js",
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\""
