@@ -4,6 +4,9 @@
   "description": "WebdriverIO server to send reporter data to testreporter.io",
   "type": "module",
   "main": "src/index.js",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\""
   },
