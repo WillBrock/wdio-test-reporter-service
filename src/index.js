@@ -1,7 +1,15 @@
+<<<<<<< HEAD
+import fs   from 'fs-extra';
+import path from 'path';
+import btoa from 'btoa';
+import { SevereServiceError } from 'webdriverio';
+
+=======
 const fs      = require(`fs-extra`);
 const path    = require(`path`);
 const fetch   = require(`node-fetch`);
 const btoa    = require(`btoa`);
+>>>>>>> master
 const api_url = `https://api.e2ereporter.com`;
 
 class TestReporterLauncher {
@@ -9,15 +17,15 @@ class TestReporterLauncher {
 		this.options = options;
 
 		if(!this.options.reporterOutputDir) {
-			throw new Error(`No reporterOutputDir specified`)
+			throw new SevereServiceError(`No reporterOutputDir specified`)
 		}
 
 		if(!this.options.username) {
-			throw new Error(`No username specified`)
+			throw new SevereServiceError(`No username specified`)
 		}
 
 		if(!this.options.apiToken) {
-			throw new Error(`No apiToken specified`)
+			throw new SevereServiceError(`No apiToken specified`)
 		}
 	}
 
@@ -165,5 +173,5 @@ class TestReporterLauncher {
 	}
 }
 
-exports.default  = class TestReporterService {};
-exports.launcher = TestReporterLauncher;
+export default class TestReporterService {};
+export const launcher = TestReporterLauncher;
