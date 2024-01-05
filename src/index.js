@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 import fs   from 'fs-extra';
 import path from 'path';
 import btoa from 'btoa';
 import { SevereServiceError } from 'webdriverio';
 
-=======
-const fs      = require(`fs-extra`);
-const path    = require(`path`);
-const fetch   = require(`node-fetch`);
-const btoa    = require(`btoa`);
->>>>>>> master
 const api_url = `https://api.e2ereporter.com`;
 
 class TestReporterLauncher {
