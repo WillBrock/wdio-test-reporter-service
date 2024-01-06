@@ -1,6 +1,6 @@
 {
   "name": "wdio-test-reporter-service",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "description": "WebdriverIO server to send reporter data to testreporter.io",
   "type": "module",
   "main": "src/index.js",
