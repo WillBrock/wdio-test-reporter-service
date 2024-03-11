@@ -64,15 +64,16 @@ class TestReporterLauncher {
 				continue;
 			}
 
-			const filepath = `${directory}/${file}`;
-			const tmp      = fs.readFileSync(filepath, { encoding : `utf8` });
+			const filepath   = `${directory}/${file}`;
+			const tmp        = fs.readFileSync(filepath, { encoding : `utf8` });
+			const identifier = file.match(/wdio-(\d+-\d+)-/)[1];
 
 			if(!tmp) {
 				continue;
 			}
 
 			const content   = JSON.parse(tmp);
-			const suite_key = btoa(`${content.spec_file}:${content.capabilities}:${content.title}`);
+			const suite_key = btoa(`${identifier}:${content.spec_file}:${content.capabilities}:${content.title}`);
 
 			suite_data[suite_key] = {
 				title        : content.title,
@@ -88,7 +89,7 @@ class TestReporterLauncher {
 
 			for(const test of content.tests) {
 				const hook     = test.type === `hook`;
-				const test_key = btoa(`${content.spec_file}:${content.capabilities}:${content.title}:${test.title}`);
+				const test_key = btoa(`${identifier}:${content.spec_file}:${content.capabilities}:${content.title}:${test.title}`);
 
 				if(!all_errors[test_key]) {
 					all_errors[test_key] = [];
