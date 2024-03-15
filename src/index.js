@@ -84,6 +84,7 @@ class TestReporterLauncher {
 				passed       : content.passed,
 				failed       : content.failed,
 				skipped      : content.skipped,
+				start        : content.start,
 				tests        : [],
 			};
 
