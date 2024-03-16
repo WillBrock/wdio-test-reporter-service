@@ -47,17 +47,19 @@ class TestReporterLauncher {
 		const all_hooks  = {};
 
 		const data = {
-			project_id : this.options.projectId,
-			uuid       : process.env.RUN_UUID,
-			title      : process.env.RUN_TITLE || this.start,
-			build_url  : process.env.BUILD_URL,
-			run_date   : this.start.toISOString(),
-			duration   : new Date().getTime() - this.start.getTime(),
-			version    : process.env.CODE_VERSION || this.options.codeVersion,
-			suites_ran : config.suite ? config.suite.join(`, `) : (config.multiRun || config.repeat ? `RepeatRun` : ``),
-			passed     : 1,
-			failed     : 0,
-			suites     : [],
+			project_id    : this.options.projectId,
+			uuid          : process.env.RUN_UUID,
+			title         : process.env.RUN_TITLE || this.start,
+			build_url     : process.env.BUILD_URL,
+			run_date      : this.start.toISOString(),
+			duration      : new Date().getTime() - this.start.getTime(),
+			version       : process.env.CODE_VERSION || this.options.codeVersion,
+			suites_ran    : config.suite ? config.suite.join(`, `)               : (config.multiRun || config.repeat ? `RepeatRun` : ``),
+			issue_user    : process.env.ISSUE_USER ?? null,
+			issue_summary : process.env.ISSUE_SUMMARY ?? null,
+			passed        : 1,
+			failed        : 0,
+			suites        : [],
 		};
 
 		for(const file of files) {
