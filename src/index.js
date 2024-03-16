@@ -54,7 +54,7 @@ class TestReporterLauncher {
 			run_date   : this.start.toISOString(),
 			duration   : new Date().getTime() - this.start.getTime(),
 			version    : process.env.CODE_VERSION || this.options.codeVersion,
-			suites_ran : config.suite ? config.suite.join(`, `) : ``,
+			suites_ran : config.suite ? config.suite.join(`, `) : (config.multiRun || config.repeat ? `RepeatRun` : ``),
 			passed     : 1,
 			failed     : 0,
 			suites     : [],
