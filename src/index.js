@@ -50,6 +50,7 @@ class TestReporterLauncher {
 			project_id : this.options.projectId,
 			uuid       : process.env.RUN_UUID,
 			title      : process.env.RUN_TITLE || this.start,
+			build_url  : process.env.BUILD_URL,
 			run_date   : this.start.toISOString(),
 			duration   : new Date().getTime() - this.start.getTime(),
 			version    : process.env.CODE_VERSION || this.options.codeVersion,
