@@ -81,6 +81,7 @@ class TestReporterLauncher {
 			suite_data[suite_key] = {
 				title        : content.title,
 				spec_file    : content.spec_file,
+				filepath     : content.filepath,
 				capabilities : content.capabilities,
 				duration     : content.duration,
 				retries      : content.retries || 0,
