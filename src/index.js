@@ -51,6 +51,7 @@ class TestReporterLauncher {
 			uuid          : process.env.RUN_UUID,
 			// This is a way to group runs together, for example if you're using sharding
 			group_uuid    : process.env.GROUP_UUID,
+			main_run      : process.env.MAIN_RUN,
 			title         : process.env.RUN_TITLE || this.start,
 			build_url     : process.env.BUILD_URL,
 			run_date      : this.start.toISOString(),
