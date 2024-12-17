@@ -49,6 +49,8 @@ class TestReporterLauncher {
 		const data = {
 			project_id    : this.options.projectId,
 			uuid          : process.env.RUN_UUID,
+			// This is a way to group runs together, for example if you're using sharding
+			group_uuid    : process.env.GROUP_UUID,
 			title         : process.env.RUN_TITLE || this.start,
 			build_url     : process.env.BUILD_URL,
 			run_date      : this.start.toISOString(),
