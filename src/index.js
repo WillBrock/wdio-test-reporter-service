@@ -53,6 +53,7 @@ class TestReporterLauncher {
 			group_uuid    : process.env.GROUP_UUID,
 			main_run      : Number(process.env.MAIN_RUN),
 			title         : process.env.RUN_TITLE || this.start,
+			// Site the tests were ran on
 			site          : process.env.SITE,
 			build_url     : process.env.BUILD_URL,
 			run_date      : this.start.toISOString(),
