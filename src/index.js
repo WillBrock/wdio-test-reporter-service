@@ -168,6 +168,7 @@ class TestReporterLauncher {
 	}
 
 	post(data) {
+		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-post-data-fetch.txt`, JSON.stringify(data, null, 2), { encoding : `utf-8` });
 		return fetch(this.getApiRoute(), {
 			method  : `POST`,
 			headers : {
