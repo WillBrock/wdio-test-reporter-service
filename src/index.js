@@ -35,11 +35,15 @@ class TestReporterLauncher {
 			await this.post(data);
 		}
 		catch(e) {
-			fs.writeFileSync(`${this.options.reporterOutputDir}/post-error.txt`, e.message, { encoding : `utf-8` });
+			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-post-error.txt`, e.message, { encoding : `utf-8` });
+			fs.writeFileSync(`${this.options.reporterOutputDir}/trio-post-error.txt`, e.message, { encoding : `utf-8` });
+			fs.writeFileSync(`${this.options.reporterOutputDir}/trio-post-error.txt`, `onComplete catch`, { encoding : `utf-8` });
 		}
 	}
 
 	buildData(config) {
+		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-starting-build.txt`, `test`, { encoding : `utf-8` });
+		fs.writeFileSync(`${this.options.reporterOutputDir}/trio-starting-build.txt`, `test`, { encoding : `utf-8` });
 		const directory  = path.resolve(this.options.reporterOutputDir);
 		const files      = fs.readdirSync(directory);
 		const suite_data = {};
@@ -72,8 +76,17 @@ class TestReporterLauncher {
 				continue;
 			}
 
-			const filepath   = `${directory}/${file}`;
-			const tmp        = fs.readFileSync(filepath, { encoding : `utf8` });
+			let tmp = false;
+			try {
+				const filepath = `${directory}/${file}`;
+				tmp            = fs.readFileSync(filepath, { encoding : `utf8` });
+			}
+			catch(e) {
+				fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-readfile-error.txt`, e.message, { encoding : `utf-8` });
+				fs.writeFileSync(`${this.options.reporterOutputDir}/trio-readfile-error.txt`, e.message, { encoding : `utf-8` });
+				fs.writeFileSync(`${this.options.reporterOutputDir}/trio-readfile-error.txt`, `From catch`, { encoding : `utf-8` });
+			}
+				
 			const identifier = file.match(/wdio-(\d+-\d+)-/)[1];
 
 			if(!tmp) {
@@ -147,6 +160,9 @@ class TestReporterLauncher {
 		}
 
 		data.suites = suites;
+
+		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-ending-build.txt`, `ending`, { encoding : `utf-8` });
+		fs.writeFileSync(`${this.options.reporterOutputDir}/trio-ending-build.txt`, `ending`, { encoding : `utf-8` });
 
 		return data;
 	}
