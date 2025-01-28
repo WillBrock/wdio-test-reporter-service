@@ -34,9 +34,6 @@ class TestReporterLauncher {
 		try {
 			const tmp = await this.post(data);
 			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-raw-temp.txt`, `Raw tmp: ${JSON.stringify(tmp)}`, { encoding : `utf-8` });
-			
-			const result = await tmp.json();
-			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-json-response.txt`, result, { encoding : `utf-8` });
 		}
 		catch(e) {
 			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-post-error.txt`, e.message, { encoding : `utf-8` });
@@ -124,7 +121,7 @@ class TestReporterLauncher {
 				}
 
 				// This will make sure we have stored errors from the same test if it has retried
-				all_errors[test_key] = [...all_errors[test_key], ...test.errors];
+				//all_errors[test_key] = [...all_errors[test_key], ...test.errors];
 
 				const test_data = {
 					title    : test.title,
