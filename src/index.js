@@ -32,7 +32,14 @@ class TestReporterLauncher {
 		const data = this.buildData(config);
 
 		try {
-			await this.post(data);
+			const tmp = await this.post(data);
+			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-raw-temp.txt`, `Raw tmp: ${JSON.stringify(tmp)}`, { encoding : `utf-8` });
+			if(!tmp.ok) {
+				fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-invalid-response.txt`, `Status: ${tmp.status} -- Status Text: ${tmp.statusText}`, { encoding : `utf-8` });
+			}
+
+			const result = await tmp.json();
+			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-json-response.txt`, result, { encoding : `utf-8` });
 		}
 		catch(e) {
 			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-post-error.txt`, e.message, { encoding : `utf-8` });
