@@ -33,18 +33,13 @@ class TestReporterLauncher {
 
 		try {
 			const tmp = await this.post(data);
-			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-raw-temp.txt`, `Raw tmp: ${JSON.stringify(tmp)}`, { encoding : `utf-8` });
 		}
 		catch(e) {
 			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-post-error.txt`, e.message, { encoding : `utf-8` });
-			fs.writeFileSync(`${this.options.reporterOutputDir}/trio-post-error.txt`, e.message, { encoding : `utf-8` });
-			fs.writeFileSync(`${this.options.reporterOutputDir}/trio-post-error.txt`, `onComplete catch`, { encoding : `utf-8` });
 		}
 	}
 
 	buildData(config) {
-		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-starting-build.txt`, `test`, { encoding : `utf-8` });
-		fs.writeFileSync(`${this.options.reporterOutputDir}/trio-starting-build.txt`, `test`, { encoding : `utf-8` });
 		const directory  = path.resolve(this.options.reporterOutputDir);
 		const files      = fs.readdirSync(directory);
 		const suite_data = {};
@@ -72,7 +67,6 @@ class TestReporterLauncher {
 			suites        : [],
 		};
 
-		let i = 0;
 		for(const file of files) {
 			if(!file.match(/test-reporter.log/)) {
 				continue;
@@ -85,8 +79,6 @@ class TestReporterLauncher {
 			}
 			catch(e) {
 				fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-readfile-error.txt`, e.message, { encoding : `utf-8` });
-				fs.writeFileSync(`${this.options.reporterOutputDir}/trio-readfile-error.txt`, e.message, { encoding : `utf-8` });
-				fs.writeFileSync(`${this.options.reporterOutputDir}/trio-readfile-error.txt`, `From catch`, { encoding : `utf-8` });
 			}
 				
 			const identifier = file.match(/wdio-(\d+-\d+)-/)[1];
@@ -121,7 +113,7 @@ class TestReporterLauncher {
 				}
 
 				// This will make sure we have stored errors from the same test if it has retried
-				//all_errors[test_key] = [...all_errors[test_key], ...test.errors];
+				all_errors[test_key] = [...all_errors[test_key], ...test.errors];
 
 				const test_data = {
 					title    : test.title,
@@ -147,11 +139,6 @@ class TestReporterLauncher {
 			if(all_hooks[suite_key]) {
 				suite_data[suite_key].tests = [...suite_data[suite_key].tests, ...all_hooks[suite_key]];
 			}
-
-			i++;
-			if(i > 5) {
-				//break;
-			}
 		}
 
 		const suites = Object.values(suite_data);
@@ -168,23 +155,10 @@ class TestReporterLauncher {
 
 		data.suites = suites;
 
-		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-ending-build.txt`, `ending`, { encoding : `utf-8` });
-		fs.writeFileSync(`${this.options.reporterOutputDir}/trio-ending-build.txt`, `ending`, { encoding : `utf-8` });
-
 		return data;
 	}
 
 	post(data) {
-		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-post-data-fetch.txt`, JSON.stringify(data, null, 2), { encoding : `utf-8` });
-		try {
-			const tmp  = JSON.stringify(data);
-			const tmp2 = JSON.parse(tmp);
-			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-json-is-valid.txt`, `good`, { encoding : `utf-8` });
-		}
-		catch(e) {
-			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-json-parse-error.txt`, e.message, { encoding : `utf-8` });
-		}
-		
 		return fetch(this.getApiRoute(), {
 			method  : `POST`,
 			headers : {
