@@ -34,10 +34,7 @@ class TestReporterLauncher {
 		try {
 			const tmp = await this.post(data);
 			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-raw-temp.txt`, `Raw tmp: ${JSON.stringify(tmp)}`, { encoding : `utf-8` });
-			if(!tmp.ok) {
-				fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-invalid-response.txt`, `Status: ${tmp.status} -- Status Text: ${tmp.statusText}`, { encoding : `utf-8` });
-			}
-
+			
 			const result = await tmp.json();
 			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-json-response.txt`, result, { encoding : `utf-8` });
 		}
@@ -78,6 +75,7 @@ class TestReporterLauncher {
 			suites        : [],
 		};
 
+		let i = 0;
 		for(const file of files) {
 			if(!file.match(/test-reporter.log/)) {
 				continue;
@@ -151,6 +149,11 @@ class TestReporterLauncher {
 
 			if(all_hooks[suite_key]) {
 				suite_data[suite_key].tests = [...suite_data[suite_key].tests, ...all_hooks[suite_key]];
+			}
+
+			i++;
+			if(i > 5) {
+				break;
 			}
 		}
 
