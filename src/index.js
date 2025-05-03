@@ -25,6 +25,8 @@ class TestReporterLauncher {
 	onPrepare() {
 		fs.emptyDirSync(this.options.reporterOutputDir);
 
+		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-onPrepare.txt`, `onPrepare called`, { encoding : `utf-8` });
+
 		this.start = new Date();
 	}
 
@@ -33,6 +35,7 @@ class TestReporterLauncher {
 
 		try {
 			const tmp = await this.post(data);
+			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-onComplete-post.txt`, `onComplete-post`, { encoding : `utf-8` });
 		}
 		catch(e) {
 			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-post-error.txt`, e.message, { encoding : `utf-8` });
@@ -45,6 +48,8 @@ class TestReporterLauncher {
 		const suite_data = {};
 		const all_errors = {};
 		const all_hooks  = {};
+
+		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-buildData.txt`, `Starting buildData`, { encoding : `utf-8` });
 
 		const data = {
 			project_id    : this.options.projectId,
@@ -156,6 +161,8 @@ class TestReporterLauncher {
 
 			break;
 		}
+
+		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-end-buildData.txt`, `Ending buildData`, { encoding : `utf-8` });
 
 		data.suites = suites;
 
