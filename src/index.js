@@ -49,6 +49,8 @@ class TestReporterLauncher {
 		const all_errors = {};
 		const all_hooks  = {};
 
+		
+		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-skip-passed.txt`, `Value of SKIP_PASSED_UPLOADS: ${process.env.SKIP_PASSED_UPLOADS}`, { encoding : `utf-8` });
 		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-buildData.txt`, `Starting buildData`, { encoding : `utf-8` });
 
 		const data = {
