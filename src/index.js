@@ -90,7 +90,7 @@ class TestReporterLauncher {
 			const content   = JSON.parse(tmp);
 			const suite_key = btoa(`${identifier}:${content.spec_file}:${content.capabilities}:${content.title}`);
 
-			if(content.passed && process.env.SKIP_PASSED_UPLOADS) {
+			if(content.passed && Number(process.env.SKIP_PASSED_UPLOADS) === 1) {
 				continue;
 			}
 
