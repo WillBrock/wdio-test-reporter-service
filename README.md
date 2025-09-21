@@ -16,13 +16,16 @@ npm install wdio-test-reporter-service
 
 ```
 services: [['test-reporter', {
-	reporterOutputDir : `./testreporter`,      // This must match the outputDir from the wdio-test-reporter
-	username          : `jenkins@foobar.com`,  // console.testreporter.io username
-	apiToken          : `12345`,               // Found in the console.testreporter.io under your proifle section
-	projectId         : 123,                   // Only needed if using more than one project
-	codeVersion       : `2.8.10`,              // The code version can also be set here
+	reporterOutputDir : `./testreporter`,         // This must match the outputDir from the wdio-test-reporter
+	apiUrl            : `app-api.testreporter.io` // Defaults to app-api.testreporter.io if none is set
+	username          : `jenkins@foobar.com`,     // app.testreporter.io username
+	apiToken          : `12345`,                  // Found in the app.testreporter.io under your proifle section
+	projectId         : 123,                      // Only needed if using more than one project
+	codeVersion       : `2.8.10`,                 // The code version can also be set here
 }]],
 ```
+
+You will create a custom `username` and `apiToken` in the UI under Settings -> Profile -> API Keys
 
 ## Add the wdio-test-reporter to the reporters array in wdio.conf.js
 

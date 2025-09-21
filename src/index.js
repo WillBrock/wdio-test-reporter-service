@@ -3,7 +3,7 @@ import path from 'path';
 import btoa from 'btoa';
 import { SevereServiceError } from 'webdriverio';
 
-const api_url = `https://api.e2ereporter.com`;
+const api_url = `https://app-api.testreporter.io`;
 
 class TestReporterLauncher {
 	constructor(options) {
@@ -49,7 +49,7 @@ class TestReporterLauncher {
 		const all_errors = {};
 		const all_hooks  = {};
 
-		
+
 		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-skip-passed.txt`, `Value of SKIP_PASSED_UPLOADS: ${process.env.SKIP_PASSED_UPLOADS}`, { encoding : `utf-8` });
 		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-buildData.txt`, `Starting buildData`, { encoding : `utf-8` });
 
@@ -87,7 +87,7 @@ class TestReporterLauncher {
 			catch(e) {
 				fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-readfile-error.txt`, e.message, { encoding : `utf-8` });
 			}
-				
+
 			const identifier = file.match(/wdio-(\d+-\d+)-/)[1];
 
 			if(!tmp) {
@@ -182,9 +182,13 @@ class TestReporterLauncher {
 		});
 	}
 
+	getApiUrl() {
+		return this.options.apiUrl || api_url;
+	}
+
 	getApiRoute() {
 		return [
-			api_url,
+			this.getApiUrl(),
 			`/runs`,
 		].join(``);
 	}
