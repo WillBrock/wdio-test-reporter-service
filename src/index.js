@@ -25,7 +25,7 @@ class TestReporterLauncher {
 	onPrepare() {
 		fs.emptyDirSync(this.options.reporterOutputDir);
 
-		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-onPrepare.txt`, `onPrepare called`, { encoding : `utf-8` });
+		fs.writeFileSync(`${this.options.reporterOutputDir}/trio-onPrepare.txt`, `onPrepare called`, { encoding : `utf-8` });
 
 		this.start = new Date();
 	}
@@ -35,10 +35,10 @@ class TestReporterLauncher {
 
 		try {
 			const tmp = await this.post(data);
-			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-onComplete-post.txt`, `onComplete-post`, { encoding : `utf-8` });
+			fs.writeFileSync(`${this.options.reporterOutputDir}/trio-onComplete-post.txt`, `onComplete-post`, { encoding : `utf-8` });
 		}
 		catch(e) {
-			fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-post-error.txt`, e.message, { encoding : `utf-8` });
+			fs.writeFileSync(`${this.options.reporterOutputDir}/trio-post-error.txt`, e.message, { encoding : `utf-8` });
 		}
 	}
 
@@ -50,8 +50,8 @@ class TestReporterLauncher {
 		const all_hooks  = {};
 
 
-		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-skip-passed.txt`, `Value of SKIP_PASSED_UPLOADS: ${process.env.SKIP_PASSED_UPLOADS}`, { encoding : `utf-8` });
-		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-buildData.txt`, `Starting buildData`, { encoding : `utf-8` });
+		fs.writeFileSync(`${this.options.reporterOutputDir}/trio-skip-passed.txt`, `Value of SKIP_PASSED_UPLOADS: ${process.env.SKIP_PASSED_UPLOADS}`, { encoding : `utf-8` });
+		fs.writeFileSync(`${this.options.reporterOutputDir}/trio-buildData.txt`, `Starting buildData`, { encoding : `utf-8` });
 
 		const data = {
 			project_id    : this.options.projectId,
@@ -65,10 +65,11 @@ class TestReporterLauncher {
 			build_url     : process.env.BUILD_URL,
 			run_date      : this.start.toISOString(),
 			duration      : new Date().getTime() - this.start.getTime(),
-			version       : process.env.CODE_VERSION || this.options.codeVersion,
+			version       : process.env.APP_VERSION || process.env.CODE_VERSION || this.options.appVersion || `0.0.1`,
 			suites_ran    : config.suite ? config.suite.join(`, `)               : (config.multiRun || config.repeat ? `RepeatRun` : ``),
 			issue_user    : process.env.ISSUE_USER ?? null,
 			issue_summary : process.env.ISSUE_SUMMARY ?? null,
+			enable_flaky  : Number(process.env.ENABLE_FLAKY) || this.options.enableFlaky || 0,
 			passed        : 1,
 			failed        : 0,
 			suites        : [],
@@ -85,7 +86,7 @@ class TestReporterLauncher {
 				tmp            = fs.readFileSync(filepath, { encoding : `utf8` });
 			}
 			catch(e) {
-				fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-readfile-error.txt`, e.message, { encoding : `utf-8` });
+				fs.writeFileSync(`${this.options.reporterOutputDir}/trio-readfile-error.txt`, e.message, { encoding : `utf-8` });
 			}
 
 			const identifier = file.match(/wdio-(\d+-\d+)-/)[1];
@@ -164,7 +165,7 @@ class TestReporterLauncher {
 			break;
 		}
 
-		fs.writeFileSync(`${this.options.reporterOutputDir}/../trio-end-buildData.txt`, `Ending buildData`, { encoding : `utf-8` });
+		fs.writeFileSync(`${this.options.reporterOutputDir}/trio-end-buildData.txt`, `Ending buildData`, { encoding : `utf-8` });
 
 		data.suites = suites;
 
@@ -183,7 +184,7 @@ class TestReporterLauncher {
 	}
 
 	getApiUrl() {
-		return this.options.apiUrl || api_url;
+		return `https://${this.options.apiUrl?.replace(`https://`, ``) || api_url}`;
 	}
 
 	getApiRoute() {

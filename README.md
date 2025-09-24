@@ -16,12 +16,13 @@ npm install wdio-test-reporter-service
 
 ```
 services: [['test-reporter', {
-	reporterOutputDir : `./testreporter`,         // This must match the outputDir from the wdio-test-reporter
-	apiUrl            : `app-api.testreporter.io` // Defaults to app-api.testreporter.io if none is set
-	username          : `jenkins@foobar.com`,     // app.testreporter.io username
-	apiToken          : `12345`,                  // Found in the app.testreporter.io under your proifle section
-	projectId         : 123,                      // Only needed if using more than one project
-	codeVersion       : `2.8.10`,                 // The code version can also be set here
+	reporterOutputDir : `./testreporter`,          // This must match the outputDir from the wdio-test-reporter
+	apiUrl            : `app-api.testreporter.io`, // Defaults to app-api.testreporter.io if none is set
+	username          : `jenkins@foobar.com`,      // app.testreporter.io username
+	apiToken          : `12345`,                   // Found in the app.testreporter.io under your proifle section
+	projectId         : 123,                       // Only needed if using more than one project
+	appVersion        : `2.8.10`,                  // The code version can also be set here
+	enableFlaky       : 1,                         // Will mark tests as flaky if it detects them based on previous runs
 }]],
 ```
 
@@ -44,5 +45,6 @@ reporters : [[`test`, {
 Environment variables can be set when running tests that the server will use to add to the results
 
 * `RUN_TITLE`    - Title of the test run. This might be somthing like a Jira issue key. Defaults to a timestamp if not specified
-* `RUN_UUID`     - UUID which can be used to directly link to the test run results. e.g. https://console.testreporter.io/runs/<uuid>
-* `CODE_VERSION` - Set the version of code this test run ran against
+* `RUN_UUID`     - UUID which can be used to directly link to the test run results. e.g. https://app.testreporter.io/runs/c26b23d8-eb9f-4ff4-a884-5cb9f3d3aba5
+<uuid>
+* `APP_VERSION`  - Set the version of app this test run ran against
