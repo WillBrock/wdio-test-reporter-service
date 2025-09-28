@@ -44,7 +44,6 @@ reporters : [[`test`, {
 
 Environment variables can be set when running tests that the server will use to add to the results
 
-* `RUN_TITLE`    - Title of the test run. This might be somthing like a Jira issue key. Defaults to a timestamp if not specified
-* `RUN_UUID`     - UUID which can be used to directly link to the test run results. e.g. https://app.testreporter.io/runs/c26b23d8-eb9f-4ff4-a884-5cb9f3d3aba5
-<uuid>
+* `RUN_TITLE`    - Title of the test run. This might be something like a Jira issue key. Defaults to a timestamp if not specified
+* `RUN_UUID`     - UUID which can be used to directly link to the test run results. e.g. https://app.testreporter.io/runs/c26b23d8-eb9f-4ff4-a884-5cb9f3d3aba5<uuid>
 * `APP_VERSION`  - Set the version of app this test run ran against
